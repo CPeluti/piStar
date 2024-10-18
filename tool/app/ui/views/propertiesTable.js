@@ -53,15 +53,15 @@ ui.components.PropertiesTableView = Backbone.View.extend({
 
             if (this.model.isDependum()) {
                 this.addInfo('TIP: To change the type of this dependency, just click on the current ' +
-                  'Type above and choose a new option.');
+                    'Type above and choose a new option.');
             }
             else if (this.model.isContributionLink()) {
                 this.addInfo('TIP: To change the label of this contribution link, just click on the current ' +
-                  'Value above and choose a new option.');
+                    'Value above and choose a new option.');
             }
             else if (this.model.isKindOfActor()) {
                 this.addInfo('TIP: To change the type of this Actor, just click on the current ' +
-                  'Type above and choose a new option.');
+                    'Type above and choose a new option.');
             }
         }
         this.setupOptionsPanel();
@@ -116,7 +116,7 @@ ui.components.PropertiesTableView = Backbone.View.extend({
             showbuttons: 'bottom',
             success: function (response, newValue) {
                 currentElementModel.prop('name', newValue);
-                return {newValue: currentElementModel.prop('name')};
+                return { newValue: currentElementModel.prop('name') };
             }
         })
             .on('shown', function () {
@@ -133,8 +133,8 @@ ui.components.PropertiesTableView = Backbone.View.extend({
             var typeNames = [];
             var currentType = 0;
             var element = this.model;
-            _.forEach(istar.metamodel.nodes, function(nodeType, index) {
-                typeNames.push({value: index, text: nodeType.name});
+            _.forEach(istar.metamodel.nodes, function (nodeType, index) {
+                typeNames.push({ value: index, text: nodeType.name });
                 if (nodeType.name === element.prop('type')) {
                     currentType = index;
                 }
@@ -165,8 +165,8 @@ ui.components.PropertiesTableView = Backbone.View.extend({
             var typeNames = [];
             var currentType = 0;
             var element = this.model;
-            _.forEach(istar.metamodel.containers, function(elementType, index) {
-                typeNames.push({value: index, text: elementType.name});
+            _.forEach(istar.metamodel.containers, function (elementType, index) {
+                typeNames.push({ value: index, text: elementType.name });
                 if (elementType.name === element.prop('type')) {
                     currentType = index;
                 }
@@ -193,12 +193,12 @@ ui.components.PropertiesTableView = Backbone.View.extend({
                 },
                 value: currentType
             })
-              .on('shown', function () {
-                  ui.states.editor.transitionTo(ui.states.editor.EDITING_TEXT);
-              })
-              .on('hidden', function () {
-                  ui.states.editor.transitionTo(ui.states.editor.VIEWING);
-              });
+                .on('shown', function () {
+                    ui.states.editor.transitionTo(ui.states.editor.EDITING_TEXT);
+                })
+                .on('hidden', function () {
+                    ui.states.editor.transitionTo(ui.states.editor.VIEWING);
+                });
         }
         else if (this.model.isContributionLink && this.model.isContributionLink()) {
             var element = this.model;
@@ -388,17 +388,19 @@ ui.components.PropertiesTableView = Backbone.View.extend({
         'use strict';
 
         if (this.model.prop('backgroundColor')) {
-            $('#single-element-color-picker').get(0).jscolor.fromString(this.model.prop('backgroundColor'));
+            // $('#single-element-color-picker').get(0).jscolor.fromString(this.model.prop('backgroundColor'));
         }
-        else if (ui.getSelectedCells()){
-            $('#single-element-color-picker').get(0).jscolor.fromString(ui.defaultElementBackgroundColor);
+        else if (ui.getSelectedCells()) {
+            // console.log($('#single-element-color-picker').get(0).jscolor)
+            // $('#single-element-color-picker').get(0).jscolor.fromString(ui.defaultElementBackgroundColor);
         }
+        console.log(ui.getSelectedCells)
     },
     addInfo: function (content) {
         'use strict';
 
         $('#cell-actions').append(
-          '<i>' + content + '</i><br>'
+            '<i>' + content + '</i><br>'
         );
     },
     renderCustomProperty: function (propertyName) {
@@ -414,13 +416,13 @@ ui.components.PropertiesTableView = Backbone.View.extend({
         'use strict';
 
         $('#current' + propertyName).editable({
-                showbuttons: 'bottom',
-                success: function (response, newValue) {
-                    //update backbone model
-                    var updatedElement = ui.changeCustomPropertyValue(ui.getSelectedCells()[0], $(this).attr('data-name'), newValue);
-                    return {newValue: updatedElement.prop('customProperties/' + propertyName)};
-                }
+            showbuttons: 'bottom',
+            success: function (response, newValue) {
+                //update backbone model
+                var updatedElement = ui.changeCustomPropertyValue(ui.getSelectedCells()[0], $(this).attr('data-name'), newValue);
+                return { newValue: updatedElement.prop('customProperties/' + propertyName) };
             }
+        }
         )
             .on('shown', function () {
                 ui.states.editor.transitionTo(ui.states.editor.EDITING_TEXT);
